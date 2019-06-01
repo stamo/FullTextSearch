@@ -1,0 +1,75 @@
+version: '3.4'
+
+services:
+  loadbalancer:
+    image: jwilder/nginx-proxy
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "9080:80"
+      - "9443:443"
+    environment:
+      ENABLE_IPV6: 'false'
+      DEFAULT_HOST: 'attachment.local'
+
+  fulltextsearch:
+    image: ${DOCKER_REGISTRY-}fulltextsearch
+    build:
+      context: .
+      dockerfile: FullTextSearch/Dockerfile
+    environment:
+      VIRTUAL_HOST: 'attachment.local'
+      NETWORK_ACCESS: 'internal'
+
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    command: --directoryperdb --wiredTigerCacheSizeGB 0.25
+    environment:
+      NETWORK_ACCESS: 'internal'
+      MONGO_INITDB_ROOT_USERNAME: 'mongoadmin'
+      MONGO_INITDB_ROOT_PASSWORD: 'mongoPassw0rt'
+      DEMO_LOG_ENDPOINT: 'elk'
+      DEMO_SEARCH_ENDPOINT: 'search'
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    expose:
+      - 8081
+    environment:
+      VIRTUAL_HOST: 'mongo.attachment.local'
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadmin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongoPassw0rt
+
+  elk:
+    image: io/elk-eiss:661
+    build:
+      context: elk-custom
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - elk-data:/var/lib/elasticsearch
+    expose:
+      - 5601
+      - 9200
+    environment:
+      ES_HEAP_SIZE: '512m'
+      LS_HEAP_SIZE: '512m'
+      CLUSTER_NAME: 'attachment-internal-cluster'
+      VIRTUAL_HOST: 'elk.attachment.local,search.attachment.local'
+      VIRTUAL_PORT: '5601'
+      NETWORK_ACCESS: 'internal'
+      ES_CONNECT_RETRY: '200'
+    networks:
+      default:
+        aliases:
+          - search
+          - elk.attachment.local
+          - search.attachment.local
+volumes:
+  mongo-data:
+  elk-data:
