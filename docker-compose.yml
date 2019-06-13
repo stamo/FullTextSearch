@@ -70,6 +70,28 @@ services:
           - search
           - elk.attachment.local
           - search.attachment.local
+
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+    volumes:
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+    environment:
+      NETWORK_ACCESS: 'internal'
+      VIRTUAL_HOST: 'rabbit.attachment.local'
+      VIRTUAL_PORT: '5672'
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+      DEMO_LOG_ENDPOINT: 'elk'
+      DEMO_SEARCH_ENDPOINT: 'search'
+    ports:
+    - "15672:15672"
+    networks:
+      default:
+        aliases:
+          - rabbit.attachment.local
 volumes:
   mongo-data:
   elk-data:
