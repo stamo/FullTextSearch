@@ -32,6 +32,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="File" asp-action="Upload">Upload files</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
@@ -42,6 +45,47 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            <div id="messageContainer">
+                @if (TempData[MessageConstant.ErrorMessage] != null)
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger no-margin-bottom">
+                                <button data-dismiss="alert" class="close">×</button>
+                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                @TempData[MessageConstant.ErrorMessage]
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (TempData[MessageConstant.WarningMessage] != null)
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-warning no-margin-bottom">
+                                <button data-dismiss="alert" class="close">×</button>
+                                <i class="glyphicon glyphicon-warning-sign"></i>
+                                @TempData[MessageConstant.WarningMessage]
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (TempData[MessageConstant.SuccessMessage] != null)
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-success no-margin-bottom">
+                                <button data-dismiss="alert" class="close">×</button>
+                                <i class="glyphicon glyphicon-check"></i>
+                                @TempData[MessageConstant.SuccessMessage]
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
             @RenderBody()
         </main>
     </div>
@@ -71,6 +115,7 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
 
     @RenderSection("Scripts", required: false)
 </body>
