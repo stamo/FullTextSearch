@@ -9,7 +9,7 @@ namespace FileProcessorService.Services
     {
         public void RecieveMessage(string message)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(message);
         }
     }
 }

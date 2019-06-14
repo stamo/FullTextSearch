@@ -22,8 +22,6 @@ namespace FileProcessorService
         private readonly IServiceProvider serviceProvider;
         private IConnection connection;
         private IModel channel;
-        private string exchangeName;
-        private string queueName;
 
         private readonly IConsoleTaskRecieverService consoleTaskReciever;
 
@@ -63,7 +61,10 @@ namespace FileProcessorService
             {
                 string hostName = configuration.GetValue<string>("MessageQueue:HostName");
                 string queueName = configuration.GetValue<string>("MessageQueue:QueueName");
-                var factory = new ConnectionFactory() { HostName = hostName };
+                string username = configuration.GetValue<string>("MessageQueue:UserName");
+                string password = configuration.GetValue<string>("MessageQueue:Password");
+
+                var factory = new ConnectionFactory() { HostName = hostName, UserName = username, Password = password };
 
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();

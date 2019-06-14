@@ -15,13 +15,16 @@ namespace FullTextSearch.Controllers
     public class FileController : Controller
     {
         private readonly IMongoCdnService cdn;
+        private readonly IMessageService messageService;
         private readonly ILogger logger;
 
         public FileController(
             IMongoCdnService _cdn,
+            IMessageService _messageService,
             ILogger<FileController> _logger)
         {
             cdn = _cdn;
+            messageService = _messageService;
             logger = _logger;
         }
 
@@ -41,6 +44,8 @@ namespace FullTextSearch.Controllers
                     if (formFile.Length > 0)
                     {
                         string fileId = await cdn.UploadAsync(formFile);
+
+                        messageService.PublishMessage(fileId);
                     }
                 }
 

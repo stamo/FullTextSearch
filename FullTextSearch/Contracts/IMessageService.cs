@@ -7,8 +7,8 @@ namespace FullTextSearch.Contracts
 {
     public interface IMessageService
     {
-        bool PublishMessage(string message);
+        void PublishMessage(string message);
 
-        bool PublishMessage(byte[] message);
+        void PublishMessage(byte[] message);
     }
 }
