@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullTextSearch", "FullTextSearch\FullTextSearch.csproj", "{5505E27B-6125-4F66-87AF-E7BD725CB15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullTextSearch", "FullTextSearch\FullTextSearch.csproj", "{5505E27B-6125-4F66-87AF-E7BD725CB15B}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B7E9F31A-B9FA-4696-A806-92610179984C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessorService", "FileProcessorService\FileProcessorService.csproj", "{B95C66AA-0F32-45D7-9B7D-4F50BF8BB964}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B7E9F31A-B9FA-4696-A806-92610179984C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7E9F31A-B9FA-4696-A806-92610179984C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7E9F31A-B9FA-4696-A806-92610179984C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B95C66AA-0F32-45D7-9B7D-4F50BF8BB964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B95C66AA-0F32-45D7-9B7D-4F50BF8BB964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B95C66AA-0F32-45D7-9B7D-4F50BF8BB964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B95C66AA-0F32-45D7-9B7D-4F50BF8BB964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

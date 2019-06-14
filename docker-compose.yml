@@ -22,6 +22,14 @@ services:
       VIRTUAL_HOST: 'attachment.local'
       NETWORK_ACCESS: 'internal'
 
+  fileprocessor:
+    image: ${DOCKER_REGISTRY-}fileprocessor
+    build:
+      context: .
+      dockerfile: FileProcessorService/Dockerfile
+    environment:
+      NETWORK_ACCESS: 'internal'
+
   mongo:
     image: mongo
     restart: always
