@@ -22,6 +22,7 @@ namespace FileProcessorService
         private readonly IServiceProvider serviceProvider;
         private IConnection connection;
         private IModel channel;
+        private string queueName;
 
         private readonly IConsoleTaskRecieverService consoleTaskReciever;
 
@@ -60,7 +61,7 @@ namespace FileProcessorService
             try
             {
                 string hostName = configuration.GetValue<string>("MessageQueue:HostName");
-                string queueName = configuration.GetValue<string>("MessageQueue:QueueName");
+                queueName = configuration.GetValue<string>("MessageQueue:QueueName");
                 string username = configuration.GetValue<string>("MessageQueue:UserName");
                 string password = configuration.GetValue<string>("MessageQueue:Password");
 
@@ -121,20 +122,24 @@ namespace FileProcessorService
         {
             try
             {
-                using (var scope = serviceProvider.CreateScope())
-                {
-                    // обработка на полученото съобщение
-                    var body = ea.Body;
-                    var message = Encoding.UTF8.GetString(body);
+                // обработка на полученото съобщение
+                var body = ea.Body;
+                var message = Encoding.UTF8.GetString(body);
 
-                    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 
-                    this.consoleTaskReciever.RecieveMessage(message);
-                }
+                this.consoleTaskReciever.RecieveMessage(message);
             }
             catch (Exception ex)
             {
-                // ToDo: send it back to the queue
+                var properties = channel.CreateBasicProperties();
+                properties.Persistent = true;
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: queueName,
+                                     basicProperties: properties,
+                                     body: ea.Body);
+
                 this.logger.LogError(ex, "MessageReceived");
             }
         }

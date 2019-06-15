@@ -7,9 +7,15 @@ namespace FullTextSearch.Core.Services
 {
     public class ConsoleTaskRecieverService : IConsoleTaskRecieverService
     {
+        private readonly IIndexService indexService;
+
+        public ConsoleTaskRecieverService(IIndexService _indexService)
+        {
+            indexService = _indexService;
+        }
         public void RecieveMessage(string message)
         {
-            Console.WriteLine(message);
+            indexService.IngestAttachment(message);
         }
     }
 }

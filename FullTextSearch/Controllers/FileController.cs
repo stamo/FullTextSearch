@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 
 namespace FullTextSearch.Controllers
 {
@@ -59,6 +60,17 @@ namespace FullTextSearch.Controllers
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> Download(string id)
+        {
+            var file = await cdn.DownloadAsync(ObjectId.Parse(id));
+            string contentType = file.FileInfo.Metadata
+                .FirstOrDefault(k => k.Name == "contentType")
+                .Value
+                .ToString();
+
+            return File(file, contentType, file.FileInfo.Filename);
         }
     }
 }

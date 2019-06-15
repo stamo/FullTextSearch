@@ -135,5 +135,10 @@ namespace FullTextSearch.Core.Services
         {
             GC.SuppressFinalize(this);
         }
+
+        public byte[] GetFile(ObjectId id)
+        {
+            return GridFsBucket.DownloadAsBytes(id);
+        }
     }
 }

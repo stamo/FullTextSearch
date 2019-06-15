@@ -20,5 +20,6 @@ namespace FullTextSearch.Core.Contracts
         Task<GridFSDownloadStream<ObjectId>> DownloadAsync(ObjectId id);
         IEnumerable<MongoItemVM> GetAllFilesByContentType(string contentType, int skip, int take);
         IEnumerable<MongoItemVM> GetAllFiles(int skip, int take);
+        byte[] GetFile(ObjectId id);
     }
 }

@@ -17,6 +17,8 @@ namespace FileProcessorService.Extensions
             services.AddLogging();
             services.AddHostedService<ProcessorHostedService>();
             services.AddScoped<IConsoleTaskRecieverService, ConsoleTaskRecieverService>();
+            services.AddScoped<IIndexService, IndexService>();
+            services.AddScoped<IMongoCdnService, MongoCdnService>();
         }
 
         /// <summary>
