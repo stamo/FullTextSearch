@@ -1,9 +1,9 @@
-﻿using FileProcessorService.Contracts;
+﻿using FullTextSearch.Core.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileProcessorService.Services
+namespace FullTextSearch.Core.Services
 {
     public class ConsoleTaskRecieverService : IConsoleTaskRecieverService
     {

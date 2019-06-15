@@ -1,5 +1,6 @@
-﻿using FullTextSearch.Contracts;
-using FullTextSearch.Models;
+﻿using FullTextSearch.Core.Contracts;
+using FullTextSearch.Core.Models;
+using FullTextSearch.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
@@ -11,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FullTextSearch.Services
+namespace FullTextSearch.Core.Services
 {
     public class MongoCdnService : MongoDbCdnContext, IMongoCdnService
     {

@@ -1,4 +1,4 @@
-﻿namespace FileProcessorService.Contracts
+﻿namespace FullTextSearch.Core.Contracts
 {
     public interface IConsoleTaskRecieverService
     {

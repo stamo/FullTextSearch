@@ -1,4 +1,4 @@
-﻿using FullTextSearch.Contracts;
+﻿using FullTextSearch.Core.Contracts;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FullTextSearch.Services
+namespace FullTextSearch.Core.Services
 {
     public class MessageService : IMessageService
     {

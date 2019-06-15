@@ -24,6 +24,11 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\FullTextSearch.Core\FullTextSearch.Core.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <None Update="Languages\bul.traineddata">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

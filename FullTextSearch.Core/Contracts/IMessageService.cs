@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FullTextSearch.Contracts
+namespace FullTextSearch.Core.Contracts
 {
     public interface IMessageService
     {

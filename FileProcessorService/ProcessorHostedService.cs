@@ -1,4 +1,4 @@
-﻿using FileProcessorService.Contracts;
+﻿using FullTextSearch.Core.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,4 +1,4 @@
-﻿using FullTextSearch.Models;
+﻿using FullTextSearch.Core.Models;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Bson;
 using MongoDB.Driver.GridFS;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FullTextSearch.Contracts
+namespace FullTextSearch.Core.Contracts
 {
     public interface IMongoCdnService
     {
