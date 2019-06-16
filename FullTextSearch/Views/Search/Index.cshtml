@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<DocumentViewModel>
 @{
     ViewData["Title"] = "Index";
+    int i = 0;
 }
 
 <h1>Search demo</h1>
@@ -18,7 +19,7 @@
 
 @foreach (var item in Model)
 {
-    <div style="border-top: 1px solid #ccc; padding-top: 5px;">
+    <div style="@(i != 0 ? "border-top: 1px solid #ccc; " : string.Empty)padding-top: 5px;">
         <a href="@item.Url">
             @if (!String.IsNullOrEmpty(item.Title))
             {
@@ -44,6 +45,8 @@
             }
         </div>
     </div>
+
+    i++;
 }
 
 

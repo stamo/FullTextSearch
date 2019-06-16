@@ -2,10 +2,15 @@
 using FullTextSearch.Core.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
+using MongoDB.Driver.GridFS;
 using Nest;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Text;
+using Tesseract;
 
 namespace FullTextSearch.Core.Services
 {
@@ -35,7 +40,22 @@ namespace FullTextSearch.Core.Services
                 {
                     byte[] buffer = new byte[stream.Length];
                     stream.Read(buffer, 0, buffer.Length);
-                    string data = Convert.ToBase64String(buffer);
+                    string data = String.Empty;
+                    string contentType = stream.FileInfo.Metadata
+                        .FirstOrDefault(k => k.Name == "contentType")
+                        .Value
+                        .ToString()
+                        .ToLower();
+
+                    if (contentType.Contains("image"))
+                    {
+                        data = GetTextFromOcr(stream.FileInfo.Filename, buffer);
+                    }
+                    else
+                    {
+                        data = Convert.ToBase64String(buffer);
+                    }
+                    
                     string downloadUrl = config.GetValue<string>("DownloadUrl");
 
                     model = new DocumentModel()
@@ -53,6 +73,32 @@ namespace FullTextSearch.Core.Services
             {
                 throw new ArgumentException("Invalid cdn id");
             }
+        }
+
+        private string GetTextFromOcr(string filename, byte[] data)
+        {
+            string result = String.Empty;
+
+            using (var file = new FileStream(filename, FileMode.Create))
+            {
+                file.Write(data, 0, data.Length);
+                file.Flush();
+                file.Close();
+            }
+
+            using (var engine = new TesseractEngine(@"./Languages", "bul", EngineMode.Default))
+            {
+
+                using (Pix img = Pix.LoadFromFile(filename))
+                {
+                    var page = engine.Process(img);
+                    result = page.GetText();
+                }
+            }
+
+            File.Delete(filename);
+
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(result));
         }
 
         private void SendToElasticSearch(DocumentModel model)
