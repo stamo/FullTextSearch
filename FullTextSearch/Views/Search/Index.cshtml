@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DocumentViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Search demo</h1>
+
+<form action="/search/match" method="post" style="margin-bottom: 15px;">
+    <div class="row">
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="query" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+@foreach (var item in Model)
+{
+    <div style="border-top: 1px solid #ccc; padding-top: 5px;">
+        <a href="@item.Url">
+            @if (!String.IsNullOrEmpty(item.Title))
+            {
+                <span>@item.Title | </span>
+            }
+
+            <span>@item.FileName</span>
+        </a>
+        <div style="margin-bottom: 5px;">
+            @if (!String.IsNullOrEmpty(item.Author))
+            {
+                <span>Author: @item.Author</span>
+            }
+
+            @if (item.Date != null && item.Date.HasValue)
+            {
+                <span>Date: @item.Date.Value.ToString("dd.MM.yyyy HH:mm:ss")</span>
+            }
+
+            @if (!String.IsNullOrEmpty(item.Text))
+            {
+                <p>@Html.Raw(item.Text)</p>
+            }
+        </div>
+    </div>
+}
+
+
+

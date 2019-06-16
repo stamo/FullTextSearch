@@ -75,7 +75,7 @@ namespace FullTextSearch.Core.Services
                 )
             );
 
-            client.Index(model, i => i.Pipeline("attachments"));
+            var responce = client.Index(model, i => i.Pipeline("attachments"));
         }
     }
 }

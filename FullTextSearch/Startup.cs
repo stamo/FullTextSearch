@@ -35,6 +35,7 @@ namespace FullTextSearch
 
             services.AddScoped<IMongoCdnService, MongoCdnService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<ISearchService, SearchService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
