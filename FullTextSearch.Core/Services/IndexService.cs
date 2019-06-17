@@ -49,7 +49,7 @@ namespace FullTextSearch.Core.Services
 
                     if (contentType.Contains("image"))
                     {
-                        data = GetTextFromOcr(stream.FileInfo.Filename, buffer);
+                        data = GetTextFromOcr(id, buffer);
                     }
                     else
                     {
@@ -100,7 +100,6 @@ namespace FullTextSearch.Core.Services
 
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(result));
         }
-
         private void SendToElasticSearch(DocumentModel model)
         {
             string uri = config.GetValue<string>("ElasticSearchURI");
