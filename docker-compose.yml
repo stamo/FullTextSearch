@@ -6,12 +6,35 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/settings.conf:/etc/nginx/conf.d/custom-settings.conf
     ports:
       - "9080:80"
       - "9443:443"
     environment:
       ENABLE_IPV6: 'false'
       DEFAULT_HOST: 'attachment.local'
+
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+    volumes:
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+    environment:
+      NETWORK_ACCESS: 'internal'
+      VIRTUAL_HOST: 'rabbit.attachment.local'
+      VIRTUAL_PORT: '5672'
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+      DEMO_LOG_ENDPOINT: 'elk'
+      DEMO_SEARCH_ENDPOINT: 'search'
+    ports:
+    - "15672:15672"
+    networks:
+      default:
+        aliases:
+          - rabbit.attachment.local
 
   fulltextsearch:
     image: ${DOCKER_REGISTRY-}fulltextsearch
@@ -79,27 +102,7 @@ services:
           - elk.attachment.local
           - search.attachment.local
 
-  rabbit:
-    image: rabbitmq:3-management
-    restart: always
-    volumes:
-      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
-    environment:
-      NETWORK_ACCESS: 'internal'
-      VIRTUAL_HOST: 'rabbit.attachment.local'
-      VIRTUAL_PORT: '5672'
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-      RABBITMQ_DEFAULT_VHOST: "/"
-      DEMO_LOG_ENDPOINT: 'elk'
-      DEMO_SEARCH_ENDPOINT: 'search'
-    ports:
-    - "15672:15672"
-    networks:
-      default:
-        aliases:
-          - rabbit.attachment.local
+  
 volumes:
   mongo-data:
   elk-data:

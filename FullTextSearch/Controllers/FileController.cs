@@ -36,6 +36,7 @@ namespace FullTextSearch.Controllers
         }
 
         [HttpPost]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> Upload(IEnumerable<IFormFile> files)
         {
             try
