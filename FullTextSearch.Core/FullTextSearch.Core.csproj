@@ -11,7 +11,7 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.8.1" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.8.1" />
     <PackageReference Include="NEST" Version="6.8.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
     <PackageReference Include="Tesseract" Version="3.3.0" />
